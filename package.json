@@ -1,0 +1,29 @@
+{
+  "name": "elasticsearch-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "npm run test:integration && npm run test:unit",
+    "test:unit": "nyc --show-process-tree tape test/unit",
+    "test:integration": "nyc --show-process-tree tape test/integration"
+  },
+  "author": "Mark Robson <mark.o.robson@gmail.com> (http://digioli.co.uk)",
+  "license": "MIT",
+  "dependencies": {
+    "elasticsearch": "^12.1.0",
+    "express": "^4.14.0",
+    "express-graphql": "^0.5.4",
+    "graphql": "^0.7.1",
+    "helmet": "^2.3.0",
+    "winston": "^2.3.0"
+  },
+  "devDependencies": {
+    "nock": "^9.0.0",
+    "nyc": "^10.0.0",
+    "rewire": "^2.5.2",
+    "supertest": "^2.0.1",
+    "tape": "^4.6.2"
+  }
+}
