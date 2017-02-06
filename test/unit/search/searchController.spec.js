@@ -23,8 +23,12 @@ let queryRequest = {
 
 test('searchController getById method with no index, type, or id', assert => {
   searchController.__set__('searchModel', invalidSearchModel);
-  assert.throws(() => { searcController.getById(); }, 'error message', 'should throw');
-  assert.end();
+  assert.plan(1);
+  searchController
+    .getById()
+    .catch(error => {
+      assert.equals(error, 'error message', 'should reject');
+    });
 });
 
 test('searchController getById method with invalid index, type, or id', assert => {
@@ -77,7 +81,7 @@ test('searchController moreLikeThis method with index and documents', assert => 
 test('searchController search method with no params', assert => {
   assert.plan(1);
   searchController.__set__('searchModel', invalidSearchModel);
-  assert.throws(() => { searcController.getById(); }, 'error message', 'should throw');
+  assert.throws(() => { searchController.search(); }, 'error message', 'should throw');
   assert.end();
 });
 

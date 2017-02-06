@@ -5,14 +5,14 @@ const rewire = require('rewire');
 let searchModel = rewire('../../../site/search/searchModel');
 
 const validClient = {
-  search: searchObject => new Promise((resolve, reject) => {
+  search: () => new Promise((resolve) => {
     resolve({
       hits: {
         hits: [1, 2, 3],
       },
     });
   }),
-  get: searchObject => new Promise((resolve, reject) => {
+  get: () => new Promise((resolve) => {
     resolve({
       hits: {
         hits: [1, 2, 3],
@@ -22,7 +22,7 @@ const validClient = {
 };
 
 const invalidClient = {
-  search: searchObject => new Promise((resolve, reject) => {
+  search: () => new Promise((resolve, reject) => {
     reject({ message: 'error message' });
   }),
 };
