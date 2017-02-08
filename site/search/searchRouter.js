@@ -10,32 +10,26 @@ searchRouter
 
 module.exports = searchRouter;
 
-function __getById(req, res) {
+function __getById(req, res, next) {
   searchController.getById(req.params.index, req.params.type, req.params.id)
     .then(result => {
       res.json(result);
     })
-    .catch(error => {
-      res.status(500).json({ error: { message: error } });
-    });
+    .catch(next);
 }
 
-function __moreLikeThis(req, res) {
+function __moreLikeThis(req, res, next) {
   searchController.moreLikeThis(req.query.index, req.query.type, req.query.q)
     .then(result => {
       res.json(result);
     })
-    .catch(error => {
-      res.status(500).json({ error: { message: error } });
-    });
+    .catch(next);
 }
 
-function __search(req, res) {
+function __search(req, res, next) {
   searchController.search(req.params.index, req.params.type, req.query)
     .then(result => {
       res.json(result);
     })
-    .catch(error => {
-      res.status(500).json({ error: { message: error } });
-    });
+    .catch(next);
 }

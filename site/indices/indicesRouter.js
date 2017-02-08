@@ -4,14 +4,12 @@ let indicesRouter = require('express').Router();
 let indicesController = require('./indicesController');
 
 indicesRouter
-  .get('/', (req, res) => {
+  .get('/', (req, res, next) => {
     indicesController.getIndices()
     .then(result => {
       res.json(result);
     })
-    .catch(error => {
-      res.status(500).json({ error: { message: error } });
-    });
+    .catch(next);
   });
 
 module.exports = indicesRouter;
