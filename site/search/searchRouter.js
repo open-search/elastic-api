@@ -27,7 +27,7 @@ function __moreLikeThis(req, res, next) {
 }
 
 function __search(req, res, next) {
-  searchController.search(req.params.index, req.params.type, req.query)
+  searchController.search(req.query)
     .then(result => {
       res.json(result);
     })

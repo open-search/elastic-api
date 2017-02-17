@@ -5,13 +5,13 @@ let searchModel = require('./searchModel');
 
 const searchController = {
 
-  search: (index, type, queryObject) => {
+  search: (queryObject) => {
 
     let config = __getConfigFromRequestQuery(queryObject);
-    __decorateQueryObjectWithType(config, type);
-
     let searchObj = __getSearchObject(config);
+
     searchObj.body.query = __getQueryObject(config.query);
+    __decorateQueryObjectWithType(searchObj, queryObject.type);
     __decorateFrom(searchObj, config.from);
     __decorateSizeLimit(searchObj, config.size, sizeLimit);
     __decorateSort(searchObj, config.field, config.order);

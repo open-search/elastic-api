@@ -6,6 +6,7 @@ const request = require('supertest');
 
 let env = Object.assign({}, process.env);
 let app;
+let exampleUrl = 'http://example:9200';
 
 test('setup', function (t) {
   process.env.PORT = 3000;
@@ -17,8 +18,8 @@ test('setup', function (t) {
 
 test('Search Router: return error message when invalid elasticsearch client', t => {
 
-  nock('http://example:9200')
-    .post('/testindex/documents/_search')
+  nock(exampleUrl)
+    .post('/testindex/_search')
     .replyWithError({ error: { message: 'some terrible error' } });
 
   t.plan(2);
@@ -40,7 +41,7 @@ test('Search Router: return error message when invalid elasticsearch client', t 
 
 test('Search Router: return default search with no query', t => {
 
-  nock('http://example:9200')
+  nock(exampleUrl)
     .post('/_search?type=documents')
     .reply(200, {
       hits: {
@@ -66,7 +67,7 @@ test('Search Router: return default search with no query', t => {
 
 test('Search Router: return 200 with query, defaults to search all', t => {
 
-  nock('http://example:9200')
+  nock(exampleUrl)
     .post('/_search?type=documents')
     .reply(200, {
       hits: {
@@ -92,7 +93,7 @@ test('Search Router: return 200 with query, defaults to search all', t => {
 
 test('Search with query params should return results', t => {
 
-  nock('http://example:9200')
+  nock(exampleUrl)
     .post('/_search?type=documents&from=10&size=10')
     .reply(200, {
       hits: {
@@ -118,7 +119,7 @@ test('Search with query params should return results', t => {
 
 test('Get by id returns 200 when valid params', t => {
 
-  nock('http://example:9200')
+  nock(exampleUrl)
     .get('/test/documents/123')
     .reply(200, {
       hits: {
@@ -144,7 +145,7 @@ test('Get by id returns 200 when valid params', t => {
 
 test('Get by id with invalid elasticsearch client', t => {
 
-  nock('http://example:9200')
+  nock(exampleUrl)
     .get('/test/documents/123')
     .replyWithError({ error: { message: 'some terrible error' } });
 
@@ -167,7 +168,7 @@ test('Get by id with invalid elasticsearch client', t => {
 
 test('More like this: return 200 when valid params', t => {
 
-  nock('http://example:9200')
+  nock(exampleUrl)
     .post('/test/documents/_search?_source=title')
     .reply(200, {
       hits: {
@@ -193,7 +194,7 @@ test('More like this: return 200 when valid params', t => {
 
 test('More like this error message when invalid elasticsearch client', t => {
 
-  nock('http://example:9200')
+  nock(exampleUrl)
     .post('/test/documents/_search?_source=title')
     .replyWithError({ error: { message: 'some terrible error' } });
 

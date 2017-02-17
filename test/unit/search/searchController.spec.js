@@ -15,8 +15,6 @@ let queryRequest = {
   query: {
     q: '',
     index: 'index',
-  },
-  params: {
     type: 'documents',
   },
 };
@@ -89,7 +87,7 @@ test('searchController search method with empty query string', assert => {
   assert.plan(4);
   searchController.__set__('searchModel', validSearchModel);
   searchController
-    .search('index', 'documents', queryRequest.query)
+    .search(queryRequest.query)
     .then(result => {
       assert.equals(typeof result, 'object', 'response is an object');
       assert.equals(result.index, 'index', 'should have correct index');
@@ -114,7 +112,7 @@ test('searchController search method with valid query', assert => {
   queryRequest.query.q = 'test query';
   searchController.__set__('searchModel', validSearchModel);
   searchController
-    .search('index', 'documents', queryRequest.query)
+    .search(queryRequest.query)
     .then(result => {
       assert.equals(typeof result, 'object', 'response is an object');
       assert.equals(result.index, 'index', 'should have correct index');
@@ -129,7 +127,7 @@ test('searchController search method with from', assert => {
   queryRequest.query.from = 99;
   searchController.__set__('searchModel', validSearchModel);
   searchController
-    .search('index', 'documents', queryRequest.query)
+    .search(queryRequest.query)
     .then(result => {
       let from = result.from;
       assert.equals(from, 99, 'should set from to 99');
@@ -141,7 +139,7 @@ test('searchController search method with size', assert => {
   queryRequest.query.size = 5;
   searchController.__set__('searchModel', validSearchModel);
   searchController
-    .search('index', 'documents', queryRequest.query)
+    .search(queryRequest.query)
     .then(result => {
       let size = result.size;
       assert.equals(size, 5, 'should set size to 5');
@@ -153,7 +151,7 @@ test('searchController search method with invalid size', assert => {
   queryRequest.query.size = 99999;
   searchController.__set__('searchModel', validSearchModel);
   searchController
-    .search('index', 'documents', queryRequest.query)
+    .search(queryRequest.query)
     .then(result => {
       let size = result.size;
       assert.equals(size, 50, 'should set size to 50');
@@ -165,7 +163,7 @@ test('searchController search method with invalid sort', assert => {
   queryRequest.query.sort = 'nonexistant';
   searchController.__set__('searchModel', validSearchModel);
   searchController
-    .search('index', 'documents', queryRequest.query)
+    .search(queryRequest.query)
     .then(result => {
       assert.equals(result.sort, undefined, 'should not set sort attribute');
     });
@@ -177,7 +175,7 @@ test('searchController search method with valid sort', assert => {
   queryRequest.query.field = 'foobar';
   searchController.__set__('searchModel', validSearchModel);
   searchController
-    .search('index', 'documents', queryRequest.query)
+    .search(queryRequest.query)
     .then(result => {
       let sort = result.body.sort;
       assert.same(sort, [{ foobar: 'asc' }], 'should set sort attribute to object');
@@ -191,7 +189,7 @@ test('searchController search method with valid range', assert => {
   queryRequest.query.lte = 99;
   searchController.__set__('searchModel', validSearchModel);
   searchController
-    .search('index', 'documents', queryRequest.query)
+    .search(queryRequest.query)
     .then(result => {
       let filter = result.body.query.bool.filter;
       assert.same(filter, [{ range: { beep: { gte: 0, lte: 99 } } }],
