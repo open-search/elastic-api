@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "lint": "eslint test site index.js server.js",
     "test": "npm run test:integration && npm run test:unit",
     "test:unit": "nyc --show-process-tree tape test/unit",
     "test:integration": "nyc --show-process-tree tape test/integration"
