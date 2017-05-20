@@ -2,6 +2,18 @@
 
 An API to Elasticsearch.
 
+## GET /search[/?q=query[&type=type1,type2][&from=10][&size=10][&sort=asc][&filter=field][&lte=value][&gte=value]]
+
+## GET /search/:index/:type/:id
+
+Get by id. The id is the Elasticsearch id and must have an index and type.
+
+## GET /more
+
+More like this.
+
+## GET /indices
+
 ## Running
 
 When running locally, make sure an Elasticsearch instance is running. Environment variables that need to be set are:
