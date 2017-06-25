@@ -1,7 +1,7 @@
 const nock = require('nock');
 const test = require('tape').test;
 const request = require('supertest');
-const app = require('../../../index');
+const app = require('../../../app');
 
 test('Indices endpoint', (assert) => {
   assert.plan(2);

@@ -1,7 +1,7 @@
 const nock = require('nock');
 const test = require('tape').test;
 const request = require('supertest');
-const app = require('../../../index');
+const app = require('../../../app');
 
 const exampleUrl = 'http://example:9200';
 
