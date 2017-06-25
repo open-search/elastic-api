@@ -1,5 +1,5 @@
 const app = require('express')();
 
-require('./site/middleware')(app);
+require('./api/middleware')(app);
 
 module.exports = app;

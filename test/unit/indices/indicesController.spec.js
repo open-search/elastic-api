@@ -16,8 +16,8 @@ const invalidClient = {
   },
 };
 
-const errorIndicesController = require('../../../site/indices/indicesController')(errorClient);
-const invalidIndicesController = require('../../../site/indices/indicesController')(invalidClient);
+const errorIndicesController = require('../../../api/indices/indicesController')(errorClient);
+const invalidIndicesController = require('../../../api/indices/indicesController')(invalidClient);
 
 test('indicesController with client error', (assert) => {
   assert.plan(1);

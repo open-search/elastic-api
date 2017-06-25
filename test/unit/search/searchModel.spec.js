@@ -1,5 +1,5 @@
 const test = require('tape').test;
-const model = require('../../../site/search/searchModel');
+const model = require('../../../api/search/searchModel');
 
 const validClient = {
   search: () => Promise.resolve({
