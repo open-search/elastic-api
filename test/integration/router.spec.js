@@ -1,6 +1,6 @@
 const test = require('tape').test;
 const request = require('supertest');
-const app = require('../../app');
+const app = require('../../api/app');
 
 test('404', (assert) => {
   assert.plan(2);
