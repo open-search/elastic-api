@@ -1,8 +1,8 @@
 const sizeLimit = 50;
 const model = require('./searchModel');
-const searchTypes = require('./config/searchTypes');
-const moreLikeThisObject = require('./config/moreLikeThisObject');
-const searchObject = require('./config/searchObject');
+const searchTypes = require('../elastic-objects/searchTypes');
+const moreLikeThisObject = require('../elastic-objects/moreLikeThisObject');
+const searchObject = require('../elastic-objects/searchObject');
 
 const isTrue = value => (value !== undefined && value !== null);
 
@@ -55,7 +55,7 @@ const getQueryObject = (searchTerm) => {
   return getSimpleQueryStringSearchObject(searchTerm);
 };
 
-const getQueryObjectWithType = type => searchTypes[type] || 'all';
+const getQueryObjectType = type => searchTypes[type] || 'all';
 
 const getSize = (size) => {
   if (+size < sizeLimit) {
@@ -89,7 +89,7 @@ const searchController = (client) => {
       const config = getConfigFromRequestQuery(queryObject);
       const searchObj = getSearchObject(config);
       searchObj.body.query = getQueryObject(config.query);
-      searchObj.type = getQueryObjectWithType(queryObject.type);
+      searchObj.type = getQueryObjectType(queryObject.type);
       if (config.from) {
         searchObj.from = +config.from;
       }
@@ -115,7 +115,7 @@ const searchController = (client) => {
     moreLikeThis: (index, type, query) => {
       const moreLikeThis = getMoreLikeThisObject();
       moreLikeThis.index = index;
-      moreLikeThis.type = getQueryObjectWithType(type);
+      moreLikeThis.type = getQueryObjectType(type);
       moreLikeThis.body.query.more_like_this.like = query;
       return searchModel.search(moreLikeThis);
     },
