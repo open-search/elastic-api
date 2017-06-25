@@ -1,23 +1,17 @@
-'use strict';
-
-let client = require('../elasticsearchClient');
-
-let searchModel = {
-
+const searchModel = client => ({
   search: searchObj => new Promise((resolve, reject) => {
     client
       .search(searchObj)
-      .then(resolve, error => {
+      .then(resolve, (error) => {
         reject(error.message);
       });
   }),
 
   getById: (index, type, id) => new Promise((resolve, reject) => {
     client
-      .get({ index: index, type: type, id: id })
+      .get({ index, type, id })
       .then(resolve, reject);
   }),
-
-};
+});
 
 module.exports = searchModel;

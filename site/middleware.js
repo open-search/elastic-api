@@ -1,8 +1,7 @@
-'use strict';
-
 const helmet = require('helmet');
+const router = require('./router');
 
-module.exports = app => {
+module.exports = (app) => {
   app.use(helmet());
-  app.use(require('./router'));
+  app.use(router);
 };

@@ -1,6 +1,4 @@
-'use strict';
-
-let app = require('express')();
+const app = require('express')();
 
 require('./site/middleware')(app);
 

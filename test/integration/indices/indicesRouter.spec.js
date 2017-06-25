@@ -1,22 +1,9 @@
-'use strict';
-
 const nock = require('nock');
 const test = require('tape').test;
 const request = require('supertest');
+const app = require('../../../index');
 
-let env = Object.assign({}, process.env);
-let app;
-
-test('setup', function (t) {
-  process.env.PORT = 3000;
-  process.env.ELASTICSEARCH_HOST = 'http://example';
-  process.env.ELASTICSEARCH_PORT = 9200;
-  app = require('../../../index');
-  t.end();
-});
-
-test('Indices endpoint', assert => {
-
+test('Indices endpoint', (assert) => {
   assert.plan(2);
 
   nock('http://example:9200')
@@ -32,39 +19,38 @@ test('Indices endpoint', assert => {
       }
 
       assert.equals(typeof res.body.error, 'object', 'should return error object');
-      assert.equals(typeof res.body.error.message, 'object', 'should have error message object');
+      return assert.equals(typeof res.body.error.message, 'object',
+        'should have error message object');
     });
-
 });
 
-test('Indices endpoint', assert => {
-
+test('Indices endpoint', (assert) => {
   assert.plan(1);
 
-  let successArray = [{
-      health: 'yellow',
-      status: 'open',
-      index: 'test',
-      uuid: 'unique1',
-      pri: '5',
-      rep: '1',
-      'docs.count': '24',
-      'docs.deleted': '0',
-      'store.size': '10.2mb',
-      'pri.store.size': '10.2mb',
-    },
-    {
-      health: 'green',
-      status: 'open',
-      index: 'test2',
-      uuid: 'unique2',
-      pri: '1',
-      rep: '1',
-      'docs.count': '3',
-      'docs.deleted': '0',
-      'store.size': '9.1kb',
-      'pri.store.size': '9.1kb',
-    },
+  const successArray = [{
+    health: 'yellow',
+    status: 'open',
+    index: 'test',
+    uuid: 'unique1',
+    pri: '5',
+    rep: '1',
+    'docs.count': '24',
+    'docs.deleted': '0',
+    'store.size': '10.2mb',
+    'pri.store.size': '10.2mb',
+  },
+  {
+    health: 'green',
+    status: 'open',
+    index: 'test2',
+    uuid: 'unique2',
+    pri: '1',
+    rep: '1',
+    'docs.count': '3',
+    'docs.deleted': '0',
+    'store.size': '9.1kb',
+    'pri.store.size': '9.1kb',
+  },
   ];
 
   nock('http://example:9200')
@@ -79,12 +65,6 @@ test('Indices endpoint', assert => {
         return assert.end(error);
       }
 
-      assert.deepEquals(res.body, successArray, 'should return result array');
+      return assert.deepEquals(res.body, successArray, 'should return result array');
     });
-
-});
-
-test('teardown', function (t) {
-  process.env = Object.assign({}, env);
-  t.end();
 });

@@ -11,4 +11,5 @@ npm-debug.log
 ehthumbs.db
 Thumbs.db
 .nyc_output
+coverage
 node_modules

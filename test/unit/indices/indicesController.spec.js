@@ -1,42 +1,40 @@
-'use strict';
-
 const test = require('tape').test;
-const rewire = require('rewire');
 
-let indicesController = rewire('../../../site/indices/indicesController');
-
-test('indicesController with client error', assert => {
-  assert.plan(1);
-  let errorMessage = 'some error';
-  let invalidClient = {
-    cat: {
-      indices: (format, callback) => {
-        callback(errorMessage);
-      },
+const errorClient = {
+  cat: {
+    indices: (format, callback) => {
+      callback('some error');
     },
-  };
-  indicesController.__set__('client', invalidClient);
-  indicesController.getIndices()
-    .catch(error => {
-      assert.equals(error, errorMessage, 'should reject error message');
+  },
+};
+
+const invalidClient = {
+  cat: {
+    indices: (format, callback) => {
+      callback(null, { a: 1, b: 2 });
+    },
+  },
+};
+
+const errorIndicesController = require('../../../site/indices/indicesController')(errorClient);
+const invalidIndicesController = require('../../../site/indices/indicesController')(invalidClient);
+
+test('indicesController with client error', (assert) => {
+  assert.plan(1);
+  errorIndicesController.getIndices()
+    .catch((error) => {
+      assert.equals(error, 'some error', 'should reject error message');
     });
 });
 
-test('indicesController with valid client', assert => {
+test('indicesController with valid client', (assert) => {
   assert.plan(1);
-  let validResult = {
+  const validResult = {
     a: 1, b: 2,
   };
-  let invalidClient = {
-    cat: {
-      indices: (format, callback) => {
-        callback(null, validResult);
-      },
-    },
-  };
-  indicesController.__set__('client', invalidClient);
-  indicesController.getIndices()
-    .then(result => {
+
+  invalidIndicesController.getIndices()
+    .then((result) => {
       assert.deepEquals(result, validResult, 'should return valid result');
     });
 });
