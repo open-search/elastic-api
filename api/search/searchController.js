@@ -91,16 +91,13 @@ const searchController = (client) => {
       searchObj.body.query = getQueryObject(config.query);
       searchObj.type = getQueryObjectType(queryObject.type);
       searchObj.from = config.from;
-
-      if (config.size) {
-        searchObj.size = getSize(config.size);
-      }
+      searchObj.size = getSize(config.size);
 
       if (config.order && config.field && ['asc', 'desc'].indexOf(config.order) !== -1) {
         searchObj.body.sort = getSortObject(config.field, config.order);
       }
 
-      if (searchObj.body.query.bool.filter && config.filter && isTrue(config.lte)
+      if (config.filter && searchObj.body.query.bool.filter && isTrue(config.lte)
         && isTrue(config.gte)) {
         searchObj.body.query.bool.filter = getRange(config.filter, config.lte, config.gte);
       }
