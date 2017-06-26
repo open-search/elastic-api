@@ -54,17 +54,6 @@ test('searchController getById method with valid index, type, and id', (assert) 
     });
 });
 
-// test('searchController moreLikeThis with invalid results', (assert) => {
-//   assert.plan(2);
-//   const controller = searchController(invalidSearchModel);
-//   controller
-//     .moreLikeThis()
-//     .catch((error) => {
-//       assert.equals(typeof error, 'string', 'error is a string');
-//       assert.equals(error, 'error message', 'should return error message');
-//     });
-// });
-
 test('searchController moreLikeThis method with index and documents', (assert) => {
   assert.plan(3);
   const controller = searchController(validSearchModel);
@@ -96,17 +85,6 @@ test('searchController search method with empty query string', (assert) => {
       assert.same(result.body.query.bool.must.match_all, {}, 'should have match all object');
     });
 });
-
-// test('searchController search method when client error', (assert) => {
-//   assert.plan(2);
-//   const controller = searchController(invalidSearchModel);
-//   controller
-//     .search('index', 'type', queryRequest.query)
-//     .catch((error) => {
-//       assert.equals(typeof error, 'string', 'should return error message');
-//       assert.equals(error, 'error message', 'should equal "error message"');
-//     });
-// });
 
 test('searchController search method with valid query', (assert) => {
   assert.plan(4);
