@@ -2,6 +2,7 @@ const sizeLimit = 50;
 const model = require('./searchModel');
 const searchTypes = require('../elastic-objects/searchTypes');
 const moreLikeThisObject = require('../elastic-objects/moreLikeThisObject');
+const matchAllQueryObject = require('../elastic-objects/matchAllQueryObject');
 const searchObject = require('../elastic-objects/searchObject');
 
 const isTrue = value => (value !== undefined && value !== null);
@@ -25,14 +26,7 @@ const getSearchObject = config => Object.assign(searchObject, {
   type: config.type,
 });
 
-const getMatchAllQueryObject = () => ({
-  bool: {
-    must: {
-      match_all: {},
-    },
-    filter: [],
-  },
-});
+const getMatchAllQueryObject = () => Object.assign({}, matchAllQueryObject);
 
 const getSimpleQueryStringSearchObject = searchPhrase => ({
   bool: {
