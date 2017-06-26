@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "lint": "eslint test site index.js server.js",
+    "dev": "watch 'npm run test' api",
     "test": "npm run lint && npm run test:tape && nyc report",
+    "lint": "eslint test site index.js server.js",
     "test:tape": "PORT=3000 ELASTICSEARCH_HOST=http://example ELASTICSEARCH_PORT=9200 nyc --reporter=lcov tape 'api/**/*.spec.js'"
   },
   "author": "Mark Robson <mark.o.robson@gmail.com> (http://digioli.co.uk)",
@@ -29,6 +30,7 @@
     "nock": "^9.0.0",
     "nyc": "^10.0.0",
     "supertest": "^2.0.1",
-    "tape": "^4.6.2"
+    "tape": "^4.6.2",
+    "watch": "^1.0.2"
   }
 }
