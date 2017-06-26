@@ -1,9 +1,14 @@
-const sizeLimit = 50;
 const model = require('./searchModel');
 const searchTypes = require('../elastic-objects/searchTypes');
 const moreLikeThisObject = require('../elastic-objects/moreLikeThisObject');
 const matchAllQueryObject = require('../elastic-objects/matchAllQueryObject');
+const simpleQueryStringObject = require('../elastic-objects/simpleQueryStringObject');
 const searchObject = require('../elastic-objects/searchObject');
+const constants = require('../constants');
+
+const sizeLimit = constants.SIZE_LIMIT;
+const searchFields = constants.SEARCH_FIELDS;
+const defaultOperator = constants.DEFAULT_OPERATOR;
 
 const isTrue = value => (value !== undefined && value !== null);
 
@@ -26,20 +31,17 @@ const getSearchObject = config => Object.assign(searchObject, {
   type: config.type,
 });
 
-const getMatchAllQueryObject = () => Object.assign({}, matchAllQueryObject);
+const getMatchAllQueryObject = () => Object.assign(matchAllQueryObject);
 
-const getSimpleQueryStringSearchObject = searchPhrase => ({
-  bool: {
-    must: {
-      simple_query_string: {
-        query: searchPhrase,
-        fields: ['attachment.content', 'title', '_all'],
-        default_operator: 'and',
-      },
-    },
-    filter: [],
-  },
-});
+const getSimpleQueryStringSearchObject = searchPhrase => {
+  const searchObject = Object.assign({}, simpleQueryStringObject);
+  searchObject.bool.must.simple_query_string = {
+    query: searchPhrase,
+    fields: searchFields,
+    default_operator: defaultOperator,
+  };
+  return searchObject;
+};
 
 const getQueryObject = (searchTerm) => {
   if (searchTerm === '' || searchTerm === '*') {
@@ -51,13 +53,7 @@ const getQueryObject = (searchTerm) => {
 
 const getQueryObjectType = type => searchTypes[type] || 'all';
 
-const getSize = (size) => {
-  if (+size < sizeLimit) {
-    return +size;
-  }
-
-  return sizeLimit;
-};
+const getSize = (size) => +size < sizeLimit ? +size : sizeLimit;
 
 const getSortObject = (field, order) => field.split(',').map((item) => {
   const sortField = {};

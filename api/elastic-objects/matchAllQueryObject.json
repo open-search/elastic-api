@@ -1,8 +1,0 @@
-{
-  "bool": {
-    "must": {
-      "match_all": {}
-    },
-    "filter": []
-  }
-}
