@@ -28,7 +28,6 @@
     "eslint-plugin-react": "^7.1.0",
     "nock": "^9.0.0",
     "nyc": "^10.0.0",
-    "rewire": "^2.5.2",
     "supertest": "^2.0.1",
     "tape": "^4.6.2"
   }
