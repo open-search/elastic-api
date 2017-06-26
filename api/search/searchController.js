@@ -73,12 +73,9 @@ const getSortObject = (field, order) => field.split(',').map((item) => {
 
 const getRange = (filter, lte, gte) => {
   const filterArray = [];
-  if (filter && isTrue(lte) && isTrue(gte)) {
-    const filterObject = { range: {} };
-    filterObject.range[filter] = { lte, gte };
-    filterArray.push(filterObject);
-  }
-
+  const filterObject = { range: {} };
+  filterObject.range[filter] = { lte, gte };
+  filterArray.push(filterObject);
   return filterArray;
 };
 
