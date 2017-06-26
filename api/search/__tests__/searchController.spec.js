@@ -1,6 +1,6 @@
 const test = require('tape').test;
 
-const searchController = require('../../../api/search/searchController');
+const searchController = require('../searchController');
 
 const validSearchModel = {
   get: searchObject => Promise.resolve(searchObject),

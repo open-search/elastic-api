@@ -6,9 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "lint": "eslint test site index.js server.js",
-    "test": "npm run lint && npm run test:integration && npm run test:unit",
-    "test:unit": "PORT=3000 ELASTICSEARCH_HOST=http://example ELASTICSEARCH_PORT=9200 nyc --show-process-tree tape test/unit",
-    "test:integration": "PORT=3000 ELASTICSEARCH_HOST=http://example ELASTICSEARCH_PORT=9200 nyc --show-process-tree tape test/integration"
+    "test": "npm run lint && npm run test:tape",
+    "test:tape": "PORT=3000 ELASTICSEARCH_HOST=http://example ELASTICSEARCH_PORT=9200 nyc --show-process-tree tape 'api/**/*.spec.js'"
   },
   "author": "Mark Robson <mark.o.robson@gmail.com> (http://digioli.co.uk)",
   "license": "MIT",

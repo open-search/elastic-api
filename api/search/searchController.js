@@ -11,8 +11,8 @@ const getMoreLikeThisObject = () => Object.assign({}, moreLikeThisObject);
 const getConfigFromRequestQuery = query => ({
   index: query.index,
   query: query.q || '',
-  from: query.from,
-  size: query.size,
+  from: query.from || 0,
+  size: query.size || sizeLimit,
   order: query.order || 'asc',
   field: query.field,
   filter: query.filter,
@@ -90,9 +90,7 @@ const searchController = (client) => {
       const searchObj = getSearchObject(config);
       searchObj.body.query = getQueryObject(config.query);
       searchObj.type = getQueryObjectType(queryObject.type);
-      if (config.from) {
-        searchObj.from = +config.from;
-      }
+      searchObj.from = config.from;
 
       if (config.size) {
         searchObj.size = getSize(config.size);

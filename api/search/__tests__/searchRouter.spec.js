@@ -1,13 +1,13 @@
 const nock = require('nock');
 const test = require('tape').test;
 const request = require('supertest');
-const app = require('../../../api/app');
+const app = require('../../app');
 
 const exampleUrl = 'http://example:9200';
 
 test('Search Router: return error message when invalid elasticsearch client', (assert) => {
   const invalid = nock(exampleUrl)
-    .post('/testindex/all/_search')
+    .post('/testindex/all/_search?from=0&size=50')
     .replyWithError({ error: { message: 'some terrible error' } });
 
   assert.plan(2);
@@ -29,7 +29,7 @@ test('Search Router: return error message when invalid elasticsearch client', (a
 
 test('Search Router: return default search with no query', (assert) => {
   const standard = nock(exampleUrl)
-    .post('/_search?type=all')
+    .post('/_search?type=all&from=0&size=50')
     .reply(200, {
       hits: {
         hits: [1, 2, 3],
@@ -46,15 +46,15 @@ test('Search Router: return default search with no query', (assert) => {
         return assert.end(error);
       }
 
-      standard.done();
       assert.deepEqual(res.body, { hits: { hits: [1, 2, 3] } }, 'should return expected value');
+      standard.done();
       return assert.end();
     });
 });
 
 test('Search Router: return 200 with query, defaults to search all', (assert) => {
   const standard = nock(exampleUrl)
-    .post('/_search?type=all')
+    .post('/_search?type=all&from=0&size=50')
     .reply(200, {
       hits: {
         hits: [1, 2, 3],
