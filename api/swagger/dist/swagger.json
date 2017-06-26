@@ -1,0 +1,56 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is an example open search api. It is an interface to Elasticsearch 5.0",
+    "version": "1.0.0",
+    "title": "Open Search Search API",
+    "contact": {
+      "email": "mark.o.robson@gmail.com"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "search",
+      "description": "Main query endpoint"
+    },
+    {
+      "name": "indices",
+      "description": "The indices in elasticsearch"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/search": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "summary": "Returns pet inventories by status",
+        "description": "Returns a map of status codes to quantities",
+        "operationId": "search",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

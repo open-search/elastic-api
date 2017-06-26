@@ -43,13 +43,8 @@ const getSimpleQueryStringSearchObject = searchPhrase => {
   return searchObject;
 };
 
-const getQueryObject = (searchTerm) => {
-  if (searchTerm === '' || searchTerm === '*') {
-    return getMatchAllQueryObject();
-  }
-
-  return getSimpleQueryStringSearchObject(searchTerm);
-};
+const getQueryObject = (searchTerm) => (searchTerm === '' || searchTerm === '*') ?
+  getMatchAllQueryObject() : getSimpleQueryStringSearchObject(searchTerm);
 
 const getQueryObjectType = type => searchTypes[type] || 'all';
 

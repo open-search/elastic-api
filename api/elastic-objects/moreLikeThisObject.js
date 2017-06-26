@@ -5,7 +5,7 @@ module.exports = {
       more_like_this: {
         fields: [
           'title',
-          'attachmentcontent',
+          'attachment.content',
         ],
         like: null,
         max_query_terms: 12,
