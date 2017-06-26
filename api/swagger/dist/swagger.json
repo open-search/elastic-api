@@ -11,7 +11,7 @@
       "name": "MIT"
     }
   },
-  "basePath": "/v1",
+  "basePath": "/",
   "tags": [
     {
       "name": "search",
@@ -26,14 +26,13 @@
     "http"
   ],
   "paths": {
-    "/search": {
+    "/indices": {
       "get": {
         "tags": [
-          "search"
+          "indices"
         ],
-        "summary": "Returns pet inventories by status",
-        "description": "Returns a map of status codes to quantities",
-        "operationId": "search",
+        "summary": "Returns a list of indeces along with health information",
+        "operationId": "indices",
         "produces": [
           "application/json"
         ],
@@ -42,10 +41,136 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "integer",
-                "format": "int32"
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "properties": {
+                "health": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "index": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "pri": {
+                  "type": "string"
+                },
+                "rep": {
+                  "type": "string"
+                },
+                "docs.count": {
+                  "type": "string"
+                },
+                "docs.deleted": {
+                  "type": "string"
+                },
+                "store.size": {
+                  "type": "string"
+                },
+                "pri.store.size": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "summary": "Returns elasticsearch results",
+        "operationId": "search",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "The search query",
+            "type": "string"
+          },
+          {
+            "name": "index",
+            "in": "query",
+            "description": "The elasticsearch index to search against",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "The elasticsearch document type",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/searchSchema"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "searchSchema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "took": {
+            "type": "integer"
+          },
+          "timed_out": {
+            "type": "boolean"
+          },
+          "_shards": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer"
+              }
+            }
+          },
+          "hits": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer"
+              },
+              "max_score": {
+                "type": "string"
+              },
+              "hits": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                },
+                "properties": {
+                  "_index": {
+                    "type": "string"
+                  },
+                  "_type": {
+                    "type": "string"
+                  },
+                  "_id": {
+                    "type": "string"
+                  },
+                  "_score": {
+                    "type": "number"
+                  }
+                }
               }
             }
           }
