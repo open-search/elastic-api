@@ -1,10 +1,13 @@
+const path = require('path');
+const { ELASTIC_OBJECTS_PATH, SIZE_LIMIT, SEARCH_FIELDS, DEFAULT_OPERATOR } =
+  require('../constants');
 const model = require('./searchModel');
-const searchTypes = require('../elastic-objects/searchTypes');
-const moreLikeThisObject = require('../elastic-objects/moreLikeThisObject');
-const matchAllQueryObject = require('../elastic-objects/matchAllQueryObject');
-const simpleQueryStringObject = require('../elastic-objects/simpleQueryStringObject');
-const searchObject = require('../elastic-objects/searchObject');
-const { SIZE_LIMIT, SEARCH_FIELDS, DEFAULT_OPERATOR } = require('../constants');
+const searchTypes = require(path.resolve(ELASTIC_OBJECTS_PATH, 'searchTypes'));
+const moreLikeThisObject = require(path.resolve(ELASTIC_OBJECTS_PATH, 'moreLikeThisObject'));
+const matchAllQueryObject = require(path.resolve(ELASTIC_OBJECTS_PATH, 'matchAllQueryObject'));
+const simpleQueryStringObject =
+  require(path.resolve(ELASTIC_OBJECTS_PATH, 'simpleQueryStringObject'));
+const searchObject = require(path.resolve(ELASTIC_OBJECTS_PATH, 'searchObject'));
 
 const isTrue = value => (value !== undefined && value !== null);
 
