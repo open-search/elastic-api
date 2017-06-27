@@ -4,11 +4,7 @@ const moreLikeThisObject = require('../elastic-objects/moreLikeThisObject');
 const matchAllQueryObject = require('../elastic-objects/matchAllQueryObject');
 const simpleQueryStringObject = require('../elastic-objects/simpleQueryStringObject');
 const searchObject = require('../elastic-objects/searchObject');
-const constants = require('../constants');
-
-const sizeLimit = constants.SIZE_LIMIT;
-const searchFields = constants.SEARCH_FIELDS;
-const defaultOperator = constants.DEFAULT_OPERATOR;
+const { SIZE_LIMIT, SEARCH_FIELDS, DEFAULT_OPERATOR } = require('../constants');
 
 const isTrue = value => (value !== undefined && value !== null);
 
@@ -18,7 +14,7 @@ const getConfigFromRequestQuery = query => ({
   index: query.index,
   query: query.q || '',
   from: query.from || 0,
-  size: query.size || sizeLimit,
+  size: query.size || SIZE_LIMIT,
   order: query.order || 'asc',
   field: query.field,
   filter: query.filter,
@@ -37,8 +33,8 @@ const getSimpleQueryStringSearchObject = searchPhrase => {
   const searchObject = Object.assign({}, simpleQueryStringObject);
   searchObject.bool.must.simple_query_string = {
     query: searchPhrase,
-    fields: searchFields,
-    default_operator: defaultOperator,
+    fields: SEARCH_FIELDS,
+    default_operator: DEFAULT_OPERATOR,
   };
   return searchObject;
 };
@@ -48,7 +44,7 @@ const getQueryObject = (searchTerm) => (searchTerm === '' || searchTerm === '*')
 
 const getQueryObjectType = type => searchTypes[type] || 'all';
 
-const getSize = (size) => +size < sizeLimit ? +size : sizeLimit;
+const getSize = (size) => +size < SIZE_LIMIT ? +size : SIZE_LIMIT;
 
 const getSortObject = (field, order) => field.split(',').map((item) => {
   const sortField = {};
