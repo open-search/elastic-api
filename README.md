@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/open-search/elastic-api.svg?branch=master)](https://travis-ci.org/open-search/elastic-api)
+
 # Elasticsearch API
 
 An API to Elasticsearch.
