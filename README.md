@@ -54,6 +54,10 @@ test-api:
     - "3333:3333"
 ```
 
+## Ping
+
+To check the service hit the ```/ping``` endpoint.
+
 ## Testing
 
 ```
