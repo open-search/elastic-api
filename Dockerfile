@@ -1,4 +1,4 @@
-FROM node:argon
+FROM node:alpine
 
 ENV user node
 
@@ -14,6 +14,7 @@ RUN \
 COPY . .
 
 ENV NODE_ENV=production
+ENV ELASTIC_OBJECTS_PATH='./examples'
 
 EXPOSE 3000
 CMD [ "node", "server" ]
