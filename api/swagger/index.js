@@ -1,17 +1,6 @@
-const path = require('path');
-const express = require('express');
-const sla = express();
-const swaggerExpress = require('swagger-node-express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 module.exports = (app) => {
-  swaggerExpress.createNew(sla);
-
-  app.use('/swagger', sla);
-  app.use(express.static(path.resolve(__dirname, 'dist')));
-
-  sla.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'dist/index.html'));
-  });
-
-  return sla;
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 };

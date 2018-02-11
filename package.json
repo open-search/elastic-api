@@ -13,12 +13,14 @@
   "author": "Mark Robson <mark.o.robson@gmail.com> (http://digioli.co.uk)",
   "license": "MIT",
   "dependencies": {
+    "cors": "2.8.4",
     "elasticsearch": "^12.1.0",
     "express": "^4.14.0",
     "express-graphql": "^0.5.4",
     "express-ping": "1.4.0",
     "graphql": "^0.7.1",
     "helmet": "^2.3.0",
+    "swagger-ui-express": "2.0.15",
     "winston": "^2.3.0"
   },
   "devDependencies": {
@@ -30,7 +32,6 @@
     "nock": "^9.0.0",
     "nyc": "^10.0.0",
     "supertest": "^2.0.1",
-    "swagger-node-express": "^2.1.3",
     "tape": "^4.6.2",
     "watch": "^1.0.2"
   }
